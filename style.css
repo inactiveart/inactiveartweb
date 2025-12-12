@@ -328,6 +328,11 @@ section {
 }
 
 /* WORKS / GALLERY */
+#works {
+    padding-top: 25vh;
+    /* Extra separation from Philosophy section */
+}
+
 /* Kategori Satırları */
 .category-row {
     margin-bottom: 5rem;
