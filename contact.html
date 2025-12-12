@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#000000">
+    <title>Contact Protocol | Inactiveart</title>
+    <meta name="description"
+        content="Sessizliğin gücü. Inactiveart, dijital gürültüyü filtreleyen, yüksek performanslı ve minimalist web sistemleri tasarlar. CRM, Arayüz ve Marka Kimliği.">
+    <meta name="keywords"
+        content="Minimalist Web Design, Digital Architecture, UI/UX Design, Inactiveart, System Design, Frontend Development, Cyberpunk Estetik">
+    <meta name="author" content="Inactiveart Systems">
+    <meta name="copyright" content="Inactiveart © 2025">
+    <meta name="generator" content="Inactiveart Core Engine">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://www.inactiveart.com/contact.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.inactiveart.com/contact.html">
+    <meta property="og:title" content="Contact Protocol | Inactiveart">
+    <meta property="og:description"
+        content="Karmaşayı kodluyoruz, siz sonucu görüyorsunuz. Minimalist ve fütüristik dijital mimari.">
+    <meta property="og:image" content="https://www.inactiveart.com/assets/images/social-card.jpg">
+    <meta property="og:site_name" content="Inactiveart">
+    <meta property="og:locale" content="tr_TR">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Contact Protocol | Inactiveart">
+    <meta name="twitter:description" content="Sessizliğin gücü. Minimalist sistemler ve arayüzler.">
+    <meta name="twitter:image" content="https://www.inactiveart.com/assets/images/social-card.jpg">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "name": "Inactiveart Contact",
+      "url": "https://www.inactiveart.com/contact.html",
+      "description": "Contact Inactiveart regarding digital architecture and minimalist systems.",
+      "mainEntity": {
+        "@type": "ProfessionalService",
+        "name": "Inactiveart",
+        "image": "https://www.inactiveart.com/assets/images/social-card.jpg",
+        "priceRange": "$$$",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Istanbul",
+            "addressCountry": "TR"
+        },
+        "sameAs": [
+            "https://www.instagram.com/inactiveart",
+            "https://www.linkedin.com/company/inactiveart",
+            "https://github.com/inactiveart"
+        ]
+      }
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;500;700&family=Fira+Code:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- External Animation Libs (Required for script.js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+    <style>
+        /* İletişim Sayfasına Özel Terminal Stilleri */
+        .terminal-box {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .terminal-header {
+            color: #444;
+            font-size: 0.75rem;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #222;
+            padding-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .status-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: #10b981;
+            border-radius: 50%;
+            margin-right: 10px;
+            box-shadow: 0 0 8px #10b981;
+        }
+
+        .cmd-line {
+            margin-bottom: 25px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cmd-line label {
+            color: #10b981;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .cmd-line input,
+        .cmd-line textarea {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #333;
+            color: #fff;
+            font-family: inherit;
+            padding: 8px 0;
+            width: 100%;
+            outline: none;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .cmd-line input:focus,
+        .cmd-line textarea:focus {
+            border-bottom-color: #10b981;
+        }
+
+        .terminal-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            padding-top: 120px;
+            /* Header yuksekligi kadar bosluk */
+        }
+
+        /* Türkçe İpuçları (Tooltip) */
+        .cmd-line::after {
+            content: attr(data-hint);
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 0.75rem;
+            color: #444;
+            opacity: 0;
+            transform: translateX(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .cmd-line:hover::after {
+            opacity: 1;
+            color: #666;
+            transform: translateX(0);
+        }
+
+        .cmd-btn {
+            background: transparent;
+            border: 1px solid #10b981;
+            color: #10b981;
+            padding: 12px 25px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .cmd-btn:hover {
+            background: rgba(16, 185, 129, 0.1);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #333;
+            font-size: 0.8rem;
+        }
+
+        /* Custom Cursor Stilleri */
+        * {
+            cursor: none !important;
+        }
+
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background-color: white;
+        }
+
+        .cursor-outline {
+            width: 30px;
+            height: 30px;
+            border: 1px solid white;
+            transition: transform 0.2s ease, width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        body.hovering .cursor-dot {
+            background-color: #3b82f6;
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+
+        body.hovering .cursor-outline {
+            width: 50px;
+            height: 50px;
+            border-color: #3b82f6;
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <!-- Sound Assets -->
+    <audio id="uiClick" preload="auto" src="assets/audio/ui-click.ogg"></audio>
+
+    <header class="site-header">
+        <div class="site-logo"><span class="inactive-prefix">INACTIVE</span><span class="art-suffix">ART</span></div>
+        <div class="header-actions">
+            <div class="social-icons" id="dynamic-socials"></div>
+            <nav>
+                <a href="index.php">HOME</a>
+                <a href="identity.html">IDENTITY</a>
+                <a href="contact.html" class="active">CONTACT</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="terminal-wrapper">
+        <div class="terminal-box">
+            <div class="terminal-header">
+                <span class="status-dot"></span> SECURE CHANNEL // ENCRYPTED CONNECTION
+            </div>
+
+            <form id="terminalForm">
+                <input type="text" name="_gotcha" style="display:none !important">
+                <input type="hidden" name="_subject" value="New Inactiveart Transmission">
+
+                <div class="cmd-line" data-hint="// Adınız Soyadınız">
+                    <label>> IDENTITY:</label>
+                    <input type="text" name="name" required autocomplete="off">
+                </div>
+
+                <div class="cmd-line" data-hint="// E-posta Adresiniz">
+                    <label>> SOURCE_MAIL:</label>
+                    <input type="email" name="email" required autocomplete="off">
+                </div>
+
+                <div class="cmd-line" data-hint="// Mesajınız">
+                    <label>> DATA_PACKET:</label>
+                    <textarea name="message" rows="4" required></textarea>
+                </div>
+
+                <button type="submit" class="cmd-btn" id="submitBtn">
+                    [ EXECUTE_PROTOCOL ]
+                </button>
+            </form>
+
+            <div id="statusMessage" style="margin-top: 20px; font-size: 0.9rem;"></div>
+        </div>
+    </div>
+
+    <footer>
+        // SYSTEM STATUS: STABLE
+    </footer>
+
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- 1. FORMSPREE LOGIC ---
+            const FORMSPREE_ID = "mqargajo";
+            const ENDPOINT = "https://formspree.io/f/" + FORMSPREE_ID;
+            const form = document.getElementById("terminalForm");
+            const btn = document.getElementById("submitBtn");
+            const statusDiv = document.getElementById("statusMessage");
+
+            if (form) {
+                form.addEventListener("submit", function (e) {
+                    e.preventDefault();
+
+                    btn.innerHTML = "[ TRANSMITTING... ]";
+                    btn.style.opacity = "0.7";
+                    btn.disabled = true;
+                    statusDiv.innerHTML = "";
+                    statusDiv.className = "";
+
+                    const formData = new FormData(form);
+
+                    fetch(ENDPOINT, {
+                        method: "POST",
+                        body: formData,
+                        headers: { 'Accept': 'application/json' }
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                form.reset();
+                                btn.innerHTML = "[ EXECUTE_PROTOCOL ]";
+                                statusDiv.style.color = "#10b981";
+                                statusDiv.innerHTML = "> SYSTEM: PACKET SECURED. TRANSMISSION COMPLETE.";
+                            } else {
+                                throw new Error('Formspree submission failed');
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Submission Error:", error);
+                            btn.innerHTML = "[ RETRY ]";
+                            statusDiv.style.color = "#ef4444";
+                            statusDiv.innerHTML = "> ERROR: SIGNAL LOST. CHECK CONSOLE.";
+                        })
+                        .finally(() => {
+                            btn.disabled = false;
+                            btn.style.opacity = "1";
+                        });
+                });
+            }
+
+            // --- 3. SOUND LOGIC (CLICK ONLY + TOGGLE) ---
+            const clickSound = document.getElementById('uiClick');
+            const toggleBtn = document.getElementById('soundToggle');
+            const soundStatus = document.getElementById('soundStatus');
+            let isSoundOn = false; // Default OFF
+
+            // Toggle Handler
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', () => {
+                    isSoundOn = !isSoundOn;
+                    if (soundStatus) {
+                        soundStatus.innerText = isSoundOn ? "ON" : "OFF";
+                        soundStatus.style.color = isSoundOn ? "#10b981" : "#3b82f6";
+                    }
+                });
+            }
+
+            // Interactive Elements Hover
+            const interactiveElements = document.querySelectorAll('nav a, #submitBtn, input, textarea');
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    if (clickSound && isSoundOn) {
+                        const soundClone = clickSound.cloneNode();
+                        soundClone.volume = 0.3;
+                        soundClone.play().catch(e => console.warn("Click sound failed:", e));
+                    }
+                });
+            });
+        });
+    </script>
+    <!-- Script Include -->
+    <script src="script.js"></script>
+    <footer style="position: fixed; bottom: 0; left: 0; width: 100%; padding: 20px; z-index: 10; pointer-events: none;">
+        <div class="footer-content"
+            style="display: flex; justify-content: space-between; align-items: flex-end; width: 100%; padding: 0 5%;">
+            <p style="margin: 0; font-size: 0.8rem; color: #555;">
+                &copy; 2025 <span style="font-family: 'Fira Code', monospace; font-weight:700;">INACTIVEART</span>.
+                ALL SYSTEMS OPERATIONAL.
+            </p>
+            <!-- Sound Toggle -->
+            <div id="soundToggle" class="sound-toggle"
+                style="pointer-events: auto; cursor: pointer; color: #555; font-size: 0.8rem; letter-spacing: 2px;">
+                SOUND: [ <span id="soundStatus" style="color: #3b82f6;">OFF</span> ]
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

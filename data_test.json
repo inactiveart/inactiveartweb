@@ -1,0 +1,50 @@
+{
+    "meta": {
+        "title": "Inactiveart",
+        "motto": "We create. You stay inactive.",
+        "email": "contact@inactiveart.com",
+        "social": {
+            "instagram": "#",
+            "twitter": "#"
+        }
+    },
+    "hero": {
+        "content": "Minimalist Digital Experiences."
+    },
+    "philosophy": {
+        "title": "Felsefe",
+        "content": "\"Dijital gürültüden nefret ediyoruz. Bizim dünyamızda tasarım sadece süs değil, işleyen bir sessizliktir. Karmaşayı biz kodluyoruz, siz sadece sonucu görüyorsunuz. Eylemsizlik, en büyük lükstür.\""
+    },
+    "portfolio": {
+        "cat_systems": {
+            "title_en": "SYSTEMS",
+            "title_tr": "SİSTEMLER",
+            "desc": "\/\/ CRM & Architecture",
+            "items": [
+                {
+                    "id": 1765446022,
+                    "title": "CRM - WEB OTOMASYON",
+                    "img": "assets\/img\/1765446022_gorsel1.jpg"
+                }
+            ]
+        },
+        "cat_interfaces": {
+            "title_en": "INTERFACES",
+            "title_tr": "ARAYÜZLER",
+            "desc": "\/\/ Mobile & Web Experience",
+            "items": [
+                {
+                    "id": 1765446333,
+                    "title": "Test Project",
+                    "img": "assets\/img\/test.jpg"
+                }
+            ]
+        },
+        "cat_identities": {
+            "title_en": "IDENTITIES",
+            "title_tr": "KİMLİKLER",
+            "desc": "\/\/ Brand Language",
+            "items": []
+        }
+    }
+}

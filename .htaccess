@@ -1,0 +1,10 @@
+# Hassas JSON dosyalarına erişimi engelle
+<Files "data.json">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Dizin listelemeyi kapat (Güvenlik)
+Options -Indexes
+
+Options -Indexes
