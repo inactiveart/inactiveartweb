@@ -1185,3 +1185,22 @@ body {
 
     /* Hide icons on very small screens if needed, or adjust size */
 }
+
+/* ------------------------------------------------------------- */
+/* IDENTITY PAGE RESPONSIVE FIX (Mobile Text Wrap) */
+/* ------------------------------------------------------------- */
+
+/* Masaüstü: Satır kaymasını engelle (Orijinal İstek) */
+.report-nowrap {
+    white-space: nowrap;
+}
+
+/* Mobil: Satır kaymasına izin ver ve taşmayı önle */
+@media screen and (max-width: 768px) {
+    .report-nowrap {
+        white-space: normal !important;
+        /* Forces wrapping on mobile */
+        word-wrap: break-word;
+        /* Breaks long words if necessary */
+    }
+}
