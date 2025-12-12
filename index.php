@@ -140,121 +140,123 @@ if (!$data)
 
     <main>
 
-            <!-- Hero Section -->
-            <section id="intro" class="hero-section">
-                <div class="hero-content">
-                    <h1 class="hero-title reveal-stagger hacker-text" data-value="We create. You stay inactive.">
-                        We create. You stay inactive.
-                    </h1>
-                    <div class="code-subtitle reveal-stagger">
-                        // SYSTEM: Arkaplan işlemleri yönetiliyor. Siz inaktif kalın.<span class="cursor">_</span>
-                    </div>
+        <!-- Hero Section -->
+        <section id="intro" class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title reveal-stagger hacker-text" data-value="We create. You stay inactive.">
+                    We create. You stay inactive.
+                </h1>
+                <div class="code-subtitle reveal-stagger">
+                    // SYSTEM: Arkaplan işlemleri yönetiliyor. Siz inaktif kalın.<span class="cursor">_</span>
                 </div>
-            </section>
-
-            <!-- Philosophy Section -->
-            <section id="about">
-                <div class="container">
-                    <div class="section-header">
-                        <h2 class="section-title hacker-text" data-value="PHILOSOPHY">PHILOSOPHY</h2>
-                        <div class="section-line"></div>
-                    </div>
-                    <div class="reveal-text">
-                        <p class="reveal-stagger" style="font-size: 2rem; margin-left: 5%; line-height: 1.4;">
-                            <?php echo $data['philosophy']['content']; ?>
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="works">
-                <div class="container" style="width: 100%;">
-                    <div class="section-header text-right">
-                        <h2 class="section-title hacker-text" data-value="SELECTED WORKS">SELECTED WORKS</h2>
-                        <div class="section-line"></div>
-                    </div>
-
-                    <?php
-                    // data.json contains 'portfolio' key with categories
-                    if (isset($data['portfolio'])):
-                        foreach ($data['portfolio'] as $catKey => $category):
-                            ?>
-                            <div class="category-row reveal-stagger">
-                                <div class="category-header">
-                                    <div class="cat-titles">
-                                        <h3>
-                                            <?php echo $category['title_en']; ?>
-                                            <span class="tr-title">/ <?php echo $category['title_tr']; ?></span>
-                                        </h3>
-                                    </div>
-                                    <div class="cat-desc"><?php echo $category['desc']; ?></div>
-                                </div>
-
-                                <div class="portfolio-reel">
-                                    <?php if (isset($category['items'])):
-                                        foreach ($category['items'] as $item): ?>
-                                            <article class="work-item">
-                                                <figure>
-                                                    <img src="<?php echo $item['img']; ?>" alt="<?php echo $item['title']; ?>">
-                                                </figure>
-                                                <h4 class="work-title"><?php echo $item['title']; ?></h4>
-                                            </article>
-                                        <?php endforeach; endif; ?>
-                                </div>
-                            </div>
-                            <?php
-                        endforeach;
-                    endif;
-                    ?>
-                </div>
-            </section>
-
-
-
-        </main>
-
-        <footer class="site-footer">
-            <div class="footer-content" style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
-                <p>
-                    &copy; 2025 <span style="font-family: 'Fira Code', monospace; font-weight:700;">INACTIVEART</span>. 
-                    ALL SYSTEMS OPERATIONAL.
-                </p>
-                <!-- Sound Toggle -->
-                <div id="soundToggle" class="sound-toggle"
-                    style="cursor: pointer; color: #555; font-size: 0.8rem; letter-spacing: 2px;">
-                    SOUND: [ <span id="soundStatus" style="color: #3b82f6;">OFF</span> ]
-                </div>
-                <!-- Admin Link -->
-                <a href="admin.php" style="font-size: 0.8rem; opacity: 0.2; color: #555; text-decoration: none;">System</a>
             </div>
-        </footer>
+        </section>
 
-        <!-- Custom Cursor Elements -->
-        <div class="cursor-dot"></div>
-        <div class="cursor-outline"></div>
+        <!-- Philosophy Section -->
+        <section id="about">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title hacker-text" data-value="PHILOSOPHY">PHILOSOPHY</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="reveal-text">
+                    <p class="reveal-stagger"
+                        style="font-size: 2rem; margin-left: 5%; line-height: 1.4; font-family: 'Courier New', Courier, monospace;">
+                        <?php echo $data['philosophy']['content']; ?>
+                    </p>
+                </div>
+            </div>
+        </section>
 
-        <script src="script.js"></script>
-        <!-- FAILSAFE PRELOADER REMOVER (Independent of script.js) -->
-        <script>
-            window.addEventListener('load', () => {
-                setTimeout(() => {
-                    const preloader = document.getElementById('preloader');
-                    if (preloader) {
-                        preloader.style.opacity = '0';
-                        preloader.style.pointerEvents = 'none';
-                        setTimeout(() => {
-                            preloader.style.display = 'none';
-                        }, 1000);
-                    }
-                }, 3500); // 3.5s hard limit
-            });
+        <section id="works">
+            <div class="container" style="width: 100%;">
+                <div class="section-header text-right">
+                    <h2 class="section-title hacker-text" data-value="SELECTED WORKS">SELECTED WORKS</h2>
+                    <div class="section-line"></div>
+                </div>
 
-            // Backup timeout inside script tag itself (executes immediately)
+                <?php
+                // data.json contains 'portfolio' key with categories
+                if (isset($data['portfolio'])):
+                    foreach ($data['portfolio'] as $catKey => $category):
+                        ?>
+                        <div class="category-row reveal-stagger">
+                            <div class="category-header">
+                                <div class="cat-titles">
+                                    <h3>
+                                        <?php echo $category['title_en']; ?>
+                                        <span class="tr-title">/ <?php echo $category['title_tr']; ?></span>
+                                    </h3>
+                                </div>
+                                <div class="cat-desc"><?php echo $category['desc']; ?></div>
+                            </div>
+
+                            <div class="portfolio-reel">
+                                <?php if (isset($category['items'])):
+                                    foreach ($category['items'] as $item): ?>
+                                        <article class="work-item">
+                                            <figure>
+                                                <img src="<?php echo $item['img']; ?>" alt="<?php echo $item['title']; ?>">
+                                            </figure>
+                                            <h4 class="work-title"><?php echo $item['title']; ?></h4>
+                                        </article>
+                                    <?php endforeach; endif; ?>
+                            </div>
+                        </div>
+                        <?php
+                    endforeach;
+                endif;
+                ?>
+            </div>
+        </section>
+
+
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content"
+            style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+            <p>
+                &copy; 2025 <span style="font-family: 'Fira Code', monospace; font-weight:700;">INACTIVEART</span>.
+                ALL SYSTEMS OPERATIONAL.
+            </p>
+            <!-- Sound Toggle -->
+            <div id="soundToggle" class="sound-toggle"
+                style="cursor: pointer; color: #555; font-size: 0.8rem; letter-spacing: 2px;">
+                SOUND: [ <span id="soundStatus" style="color: #3b82f6;">OFF</span> ]
+            </div>
+            <!-- Admin Link -->
+            <a href="admin.php" style="font-size: 0.8rem; opacity: 0.2; color: #555; text-decoration: none;">System</a>
+        </div>
+    </footer>
+
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <script src="script.js"></script>
+    <!-- FAILSAFE PRELOADER REMOVER (Independent of script.js) -->
+    <script>
+        window.addEventListener('load', () => {
             setTimeout(() => {
                 const preloader = document.getElementById('preloader');
-                if (preloader) { preloader.style.display = 'none'; }
-            }, 5000);
-        </script>
+                if (preloader) {
+                    preloader.style.opacity = '0';
+                    preloader.style.pointerEvents = 'none';
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                    }, 1000);
+                }
+            }, 3500); // 3.5s hard limit
+        });
+
+        // Backup timeout inside script tag itself (executes immediately)
+        setTimeout(() => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) { preloader.style.display = 'none'; }
+        }, 5000);
+    </script>
 </body>
 
 </html>
