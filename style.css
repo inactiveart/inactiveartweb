@@ -1091,8 +1091,8 @@ body {
     /* Satır aralığını daralt */
 
     /* Metnin alt satıra inmesini sağla (Mobil/Web'de kaydırma yok) */
-    white-space: normal !important;
-    overflow: visible !important;
+    /* white-space: normal !important;  <-- REMOVED to allow .report-nowrap to work */
+    /* overflow: visible !important;    <-- REMOVED */
 
     font-family: 'Fira Code', monospace;
 }
