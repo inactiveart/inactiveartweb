@@ -1204,3 +1204,19 @@ body {
         /* Breaks long words if necessary */
     }
 }
+
+/* ------------------------------------------------------------- */
+/* MOBILE HEADER VISUAL FIX (Scroll Overlap) */
+/* ------------------------------------------------------------- */
+@media screen and (max-width: 768px) {
+    .site-header {
+        /* Arka planı matlaştır ki yazılar alttan geçerken görünmesin */
+        background-color: #090909;
+        /* Blend mode'u sıfırla, aksi takdirde arka plan şeffaf gibi davranır */
+        mix-blend-mode: normal !important;
+        /* Altına hafif bir çizgi ekle */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        /* Z-index'i garantiye al */
+        z-index: 9999;
+    }
+}
