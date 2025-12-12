@@ -1210,13 +1210,24 @@ body {
 /* ------------------------------------------------------------- */
 @media screen and (max-width: 768px) {
     .site-header {
-        /* Arka planı matlaştır ki yazılar alttan geçerken görünmesin */
-        background-color: #090909;
-        /* Blend mode'u sıfırla, aksi takdirde arka plan şeffaf gibi davranır */
+        /* Arka planı tamamen siyah ve opak yap */
+        background: #000000 !important;
+        /* Blend mode sorun yarattığı için kapat */
         mix-blend-mode: normal !important;
-        /* Altına hafif bir çizgi ekle */
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        /* Z-index'i garantiye al */
-        z-index: 9999;
+        /* Görsel ayrım için çizgi */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+        /* Her şeyin (Cursor dahil) üzerinde kalmasını sağla */
+        z-index: 20000 !important;
+        /* GPU render tetikle */
+        transform: translateZ(0);
+        opacity: 1 !important;
+    }
+
+    /* Navigasyon elemanlarının görünürlüğünü garantiye al */
+    .site-header nav a,
+    .site-header .logo,
+    .site-header span {
+        z-index: 20001;
+        position: relative;
     }
 }
