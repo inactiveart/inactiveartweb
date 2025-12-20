@@ -214,7 +214,18 @@ if (!$data) {
                                     foreach ($category['items'] as $item): ?>
                                         <article class="work-item">
                                             <figure>
-                                                <img src="<?php echo $item['img']; ?>" alt="<?php echo $item['title']; ?>">
+                                                <?php
+                                                $imgPath = $item['img'];
+                                                $pathInfo = pathinfo($imgPath);
+                                                $webpPath = $pathInfo['dirname'] . '/' . $pathInfo['filename'] . '.webp';
+                                                ?>
+                                                <picture>
+                                                    <source srcset="<?php echo $webpPath; ?>" type="image/webp">
+                                                    <img src="<?php echo $imgPath; ?>" 
+                                                         alt="<?php echo $item['title']; ?>" 
+                                                         loading="lazy"
+                                                         decoding="async">
+                                                </picture>
                                             </figure>
                                             <h4 class="work-title"><?php echo $item['title']; ?></h4>
                                         </article>
