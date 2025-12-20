@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-// 1. AYARLAR: Lütfen bu şifreyi hemen değiştirin!
-// En az 12 karakterli, karmaşık bir şifre kullanın.
+// 1. AYARLAR: Güvenli şifre hashleme sistemi
+// Şifre: Xk9#mP2!qLvz$88a (Argon2id ile hashlenmiş)
 define('ADMIN_USER', 'admin');
-define('ADMIN_PASS', 'Xk9#mP2!qLvz$88a'); // <-- GÜÇLÜ ŞİFRE ÖRNEĞİ
+define('ADMIN_PASS_HASH', '$argon2id$v=19$m=65536,t=4,p=1$VnVCNkMubGZBL01wdjlyVA$50UG9lR0heKmwBBs1eTDjSiKRTtivC0e//Vwg7+3GnM');
 
 // 2. CSRF TOKEN OLUŞTURMA (Form Saldırılarına Karşı)
 if (empty($_SESSION['csrf_token'])) {
@@ -14,7 +14,7 @@ if (empty($_SESSION['csrf_token'])) {
 // 3. LOGIN FONKSİYONU
 function login($username, $password)
 {
-    if ($username === ADMIN_USER && $password === ADMIN_PASS) {
+    if ($username === ADMIN_USER && password_verify($password, ADMIN_PASS_HASH)) {
         $_SESSION['logged_in'] = true;
         // Session hijacking önlemek için ID yenile
         session_regenerate_id(true);
