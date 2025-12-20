@@ -312,21 +312,24 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     });
 
-    // Footer Reveal
-    gsap.fromTo(".site-footer .reveal",
-        { y: 20, opacity: 0 },
-        {
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            stagger: 0.2,
-            scrollTrigger: {
-                trigger: ".site-footer",
-                start: "top bottom-=20",
-                toggleActions: "play none none reverse"
+    // Footer Reveal - with element existence check
+    const footerReveals = document.querySelectorAll(".site-footer .reveal");
+    if (footerReveals.length > 0) {
+        gsap.fromTo(".site-footer .reveal",
+            { y: 20, opacity: 0 },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                stagger: 0.2,
+                scrollTrigger: {
+                    trigger: ".site-footer",
+                    start: "top bottom-=20",
+                    toggleActions: "play none none reverse"
+                }
             }
-        }
-    );
+        );
+    }
 
 
 
