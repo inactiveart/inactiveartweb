@@ -1,9 +1,24 @@
 <?php
+// Security Headers and HTTPS enforcement
+header("Content-Security-Policy: default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; connect-src 'self';");
+header('X-Frame-Options: DENY');
+header('X-Content-Type-Options: nosniff');
+header('X-XSS-Protection: 1; mode=block');
+header('Referrer-Policy: strict-origin-when-cross-origin');
+// Enforce HTTPS except on localhost (development)
+if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
+    if ($_SERVER['SERVER_NAME'] !== 'localhost') {
+        $httpsUrl = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        header('Location: ' . $httpsUrl, true, 301);
+        exit();
+    }
+}
 // Read Data
 $json = file_get_contents('data.json');
 $data = json_decode($json, true);
-if (!$data)
+if (!$data) {
     die('Error loading data.');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,8 +93,11 @@ if (!$data)
 </head>
 
 <body>
+    <!-- Skip to Content Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Ana içeriğe geç</a>
     <!-- Preloader -->
-    <div id="preloader">
+    <div id="preloader" role="status" aria-busy="true" aria-live="polite">
+        <span class="sr-only">Sayfa yükleniyor, lütfen bekleyin...</span>
         <div class="terminal-content">
             <span id="log-message">_</span>
             <span class="cursor">_</span>
@@ -125,12 +143,12 @@ if (!$data)
         <div class="snippet pos-25">sudo reboot</div>
     </div>
 
-    <header class="site-header reveal">
+    <header class="site-header reveal" role="banner" aria-label="Site header">
         <div class="site-logo"><span class="inactive-prefix">INACTIVE</span><span class="art-suffix">ART</span></div>
         <div class="header-actions">
             <!-- Icons injected by script.js -->
             <div class="social-icons" id="dynamic-socials"></div>
-            <nav>
+            <nav role="navigation" aria-label="Main navigation">
                 <a href="index.php">HOME</a>
                 <a href="identity.html">IDENTITY</a>
                 <a href="contact.html">CONTACT</a>
@@ -138,7 +156,7 @@ if (!$data)
         </div>
     </header>
 
-    <main>
+    <main id="main-content">
 
         <!-- Hero Section -->
         <section id="intro" class="hero-section">
@@ -214,7 +232,7 @@ if (!$data)
 
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer" role="contentinfo" aria-label="Site footer">
         <div class="footer-content"
             style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
             <p>
@@ -222,7 +240,7 @@ if (!$data)
                 ALL SYSTEMS OPERATIONAL.
             </p>
             <!-- Sound Toggle -->
-            <div id="soundToggle" class="sound-toggle"
+            <div id="soundToggle" class="sound-toggle" role="button" aria-pressed="false" aria-label="Toggle sound"
                 style="cursor: pointer; color: #555; font-size: 0.8rem; letter-spacing: 2px;">
                 SOUND: [ <span id="soundStatus" style="color: #3b82f6;">OFF</span> ]
             </div>
