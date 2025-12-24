@@ -27,9 +27,19 @@
             "desc": "\/\/ CRM & Architecture",
             "items": [
                 {
-                    "id": 1765446022,
+                    "id": 1766583942,
                     "title": "CRM - WEB OTOMASYON",
-                    "img": "assets\/img\/1765446022_gorsel1.jpg"
+                    "img": "assets\/img\/1766583942_crm.webp"
+                },
+                {
+                    "id": 1766584393,
+                    "title": "CRM - YÖNETİM PANELİ",
+                    "img": "assets\/img\/1766584393_crm2.webp"
+                },
+                {
+                    "id": 1766584770,
+                    "title": "CRM - WEB OTOMASYON",
+                    "img": "assets\/img\/1766584770_crm3.webp"
                 }
             ]
         },
@@ -39,9 +49,19 @@
             "desc": "\/\/ Mobile & Web Experience",
             "items": [
                 {
-                    "id": 1765446934,
+                    "id": 1766581127,
                     "title": "MOBİL \/ UI UYGULAMA",
-                    "img": "assets\/img\/1765446934_gorsel2.jpg"
+                    "img": "assets\/img\/1766581127_app1.webp"
+                },
+                {
+                    "id": 1766582874,
+                    "title": "MOBIL APP - WEB ARAYÜZ",
+                    "img": "assets\/img\/1766582874_app3.webp"
+                },
+                {
+                    "id": 1766583351,
+                    "title": "MOBIL APP - WEB ARAYÜZ",
+                    "img": "assets\/img\/1766583351_app.webp"
                 }
             ]
         },
@@ -51,9 +71,19 @@
             "desc": "\/\/ Brand Language",
             "items": [
                 {
-                    "id": 1765446953,
+                    "id": 1766585563,
                     "title": "KURUMSAL KİMLİK - LOGO",
-                    "img": "assets\/img\/1765446953_gorsel3.jpg"
+                    "img": "assets\/img\/1766585563_kurumsal1.webp"
+                },
+                {
+                    "id": 1766585964,
+                    "title": "LOGOTYPE",
+                    "img": "assets\/img\/1766585964_kurumsal2.webp"
+                },
+                {
+                    "id": 1766586436,
+                    "title": "KURUMSAL KİMLİK - LOGO",
+                    "img": "assets\/img\/1766586436_kurumsal3.webp"
                 }
             ]
         }
