@@ -87,10 +87,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- LOAD SOCIAL ICONS ---
+    // --- LOAD SOCIAL ICONS AND PORTFOLIO DATA ---
     fetch('data.json')
         .then(response => response.json())
         .then(data => {
+            // 1. Load Social Icons
             const socialContainer = document.getElementById('dynamic-socials');
             if (socialContainer && data.social) {
                 let html = '';
@@ -113,8 +114,95 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 socialContainer.innerHTML = html;
             }
+
+            // 2. Load Portfolio Data Dynamically
+            const worksSection = document.getElementById('works');
+            if (worksSection && data.portfolio) {
+                const container = worksSection.querySelector('.container');
+                if (container) {
+                    // Keep the section header, rebuild the rest
+                    const sectionHeader = container.querySelector('.section-header');
+                    container.innerHTML = ''; // Clear all
+                    if (sectionHeader) container.appendChild(sectionHeader); // Re-add header
+
+                    // Build categories dynamically
+                    Object.keys(data.portfolio).forEach(catKey => {
+                        const category = data.portfolio[catKey];
+
+                        const categoryDiv = document.createElement('div');
+                        categoryDiv.className = 'category-row reveal-stagger';
+
+                        categoryDiv.innerHTML = `
+                            <div class="category-header">
+                                <div class="cat-titles">
+                                    <h3>
+                                        ${category.title_en}
+                                        <span class="tr-title">/ ${category.title_tr}</span>
+                                    </h3>
+                                </div>
+                                <div class="cat-desc">${category.desc}</div>
+                            </div>
+                            <div class="portfolio-reel">
+                                ${category.items ? category.items.map(item => `
+                                    <article class="work-item">
+                                        <figure>
+                                            <img src="${item.img}" alt="${item.title}" loading="lazy" decoding="async">
+                                        </figure>
+                                        <h4 class="work-title">${item.title}</h4>
+                                    </article>
+                                `).join('') : ''}
+                            </div>
+                        `;
+
+                        container.appendChild(categoryDiv);
+                    });
+
+                    // Re-trigger GSAP animations for new elements
+                    const newRevealElements = container.querySelectorAll('.reveal-stagger');
+                    newRevealElements.forEach(el => {
+                        gsap.fromTo(el,
+                            { y: 50, opacity: 0 },
+                            {
+                                y: 0,
+                                opacity: 1,
+                                duration: 1.2,
+                                ease: "power3.out",
+                                scrollTrigger: {
+                                    trigger: el,
+                                    start: "top bottom-=100",
+                                    toggleActions: "play none none reverse"
+                                }
+                            }
+                        );
+                    });
+
+                    const newWorkItems = container.querySelectorAll('.work-item');
+                    newWorkItems.forEach(item => {
+                        gsap.fromTo(item,
+                            { y: 100, opacity: 0 },
+                            {
+                                y: 0,
+                                opacity: 1,
+                                duration: 1.5,
+                                ease: "power3.out",
+                                scrollTrigger: {
+                                    trigger: item,
+                                    start: "top bottom-=50",
+                                    toggleActions: "play none none reverse"
+                                }
+                            }
+                        );
+                    });
+                }
+            }
+
+            // 3. Load Philosophy Text
+            const philosophyText = document.querySelector('#about .reveal-text p');
+            if (philosophyText && data.philosophy && data.philosophy.content) {
+                philosophyText.textContent = data.philosophy.content;
+            }
         })
-        .catch(err => console.error("Social icons load error:", err));
+        .catch(err => console.error("Data load error:", err));
 
     // --- PRELOADER ve SES LOGİĞİ (GÜÇLENDİRİLMİŞ) ---
 
