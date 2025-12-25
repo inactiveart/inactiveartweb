@@ -1,12 +1,18 @@
 <?php
+/**
+ * @architect    Inactiveart (System Architect & UI Engineer)
+ * @project      Inactiveart Official Portfolio (V1.0)
+ * @copyright    2025 Inactiveart. All rights reserved.
+ * @description  Admin panel for portfolio content management.
+ */
+
 require_once 'auth.php';
 
-// Handle Logout
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     logout();
 }
 
-// Handle Login Submission
+
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
@@ -20,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     }
 }
 
-// Handle Admin Actions (Add/Delete/Update)
+
 if (isAuthenticated() && $_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         die('Güvenlik Hatası: Geçersiz İstek (CSRF Token Mismatch)');
@@ -28,22 +34,17 @@ if (isAuthenticated() && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('data.json'), true);
     $needsSave = false;
 
-    // 1. Action: ADD PROJECT
     if (isset($_POST['add_project'])) {
         $categoryKey = $_POST['category_key'];
         $title = $_POST['project_title'];
 
-        // Image Upload (SECURE VERSION)
         if (isset($_FILES['project_image']) && $_FILES['project_image']['error'] === UPLOAD_ERR_OK) {
 
-            // 1. GÜVENLİK: İzin verilen uzantılar listesi
             $allowedExts = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
-            // Dosya uzantısını al ve küçük harfe çevir
             $fileInfo = pathinfo($_FILES['project_image']['name']);
             $ext = strtolower($fileInfo['extension'] ?? '');
 
-            // 2. GÜVENLİK: Dosyanın gerçekten resim olup olmadığını içerikten kontrol et
             $checkImage = getimagesize($_FILES['project_image']['tmp_name']);
 
             if (!in_array($ext, $allowedExts)) {
@@ -51,21 +52,18 @@ if (isAuthenticated() && $_SERVER['REQUEST_METHOD'] === 'POST') {
             } elseif ($checkImage === false) {
                 $error = "GÜVENLİK UYARISI: Yüklenen dosya geçerli bir resim dosyası değil.";
             } else {
-                // 3. GÜVENLİK: Dosya ismini temizle (Zararlı karakterleri sil)
                 $safeName = preg_replace('/[^a-zA-Z0-9._-]/', '', basename($_FILES['project_image']['name']));
                 $name = time() . '_' . $safeName;
                 $target = "assets/img/" . $name;
 
                 if (move_uploaded_file($_FILES['project_image']['tmp_name'], $target)) {
 
-                    // Add to JSON items
                     $newItem = [
                         "id" => time(),
                         "title" => $title,
                         "img" => $target
                     ];
 
-                    // Ensure items array exists
                     if (!isset($data['portfolio'][$categoryKey]['items']) || !is_array($data['portfolio'][$categoryKey]['items'])) {
                         $data['portfolio'][$categoryKey]['items'] = [];
                     }
@@ -78,36 +76,31 @@ if (isAuthenticated() && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         } elseif (isset($_FILES['project_image']) && $_FILES['project_image']['error'] !== UPLOAD_ERR_NO_FILE) {
-            // Dosya yükleme hatalarını yakala
             $error = "Dosya yükleme hatası oluştu. Kod: " . $_FILES['project_image']['error'];
         }
     }
 
-    // 2. Action: DELETE PROJECT
+
     if (isset($_POST['delete_project'])) {
         $categoryKey = $_POST['category_key'];
         $projectId = $_POST['project_id'];
 
-        // Filter out the item
         $newItems = array_filter($data['portfolio'][$categoryKey]['items'], function ($item) use ($projectId) {
             return $item['id'] != $projectId;
         });
 
-        // Re-index array
         $data['portfolio'][$categoryKey]['items'] = array_values($newItems);
         $needsSave = true;
         $message = "Project deleted.";
     }
 
-    // 3. Action: SAVE TEXT DATA (Motto, Philosophy, etc.)
+
     if (isset($_POST['save_general'])) {
         $data['meta']['motto'] = $_POST['motto'];
 
-        // Philosophy
         $data['philosophy']['title'] = $_POST['phil_title'];
         $data['philosophy']['content'] = $_POST['phil_content'];
 
-        // Social Connections
         $data['social']['x'] = $_POST['social_x'];
         $data['social']['instagram'] = $_POST['social_instagram'];
         $data['social']['github'] = $_POST['social_github'];
@@ -122,7 +115,6 @@ if (isAuthenticated() && $_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if (!isAuthenticated()) {
-    // LOGIN VIEW (Simpler inline for brevity as requested)
     ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -188,7 +180,7 @@ if (!isAuthenticated()) {
     exit;
 }
 
-// LOAD DATA FOR DASHBOARD
+
 $data = json_decode(file_get_contents('data.json'), true);
 ?>
 <!DOCTYPE html>
@@ -288,14 +280,6 @@ $data = json_decode(file_get_contents('data.json'), true);
             padding: 5px 10px;
         }
 
-        /* Portfolio Grid */
-        .admin-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
         .admin-card {
             background: #111;
             padding: 10px;
@@ -344,8 +328,7 @@ $data = json_decode(file_get_contents('data.json'), true);
         </div>
     <?php endif; ?>
 
-    <!-- 1. GENERAL SETTINGS -->
-    <div class="section">
+        <div class="section">
         <h2>General Content</h2>
         <form method="POST">
             <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
@@ -380,8 +363,7 @@ $data = json_decode(file_get_contents('data.json'), true);
         </form>
     </div>
 
-    <!-- 2. PORTFOLIO MANAGEMENT -->
-    <div class="section">
+        <div class="section">
         <h2>Portfolio Management</h2>
 
         <?php foreach ($data['portfolio'] as $catKey => $category): ?>
@@ -392,7 +374,6 @@ $data = json_decode(file_get_contents('data.json'), true);
                     <small style="color:var(--accent)"><?php echo $category['desc']; ?></small>
                 </div>
 
-                <!-- Add Form -->
                 <form method="POST" enctype="multipart/form-data"
                     style="margin-bottom: 20px; background: #161616; padding: 15px;">
                     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
@@ -412,7 +393,6 @@ $data = json_decode(file_get_contents('data.json'), true);
                     <button type="submit">+ ADD TO <?php echo $category['title_en']; ?></button>
                 </form>
 
-                <!-- List Items -->
                 <div class="admin-grid">
                     <?php if (isset($category['items'])):
                         foreach ($category['items'] as $item): ?>

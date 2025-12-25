@@ -1,12 +1,10 @@
-/* * ==============================================
- * INACTIVEART | Digital Architecture
- * ==============================================
- * Designed & Coded by: INACTIVEART
- * All Rights Reserved.
- * ==============================================
+/**
+ * @architect    Inactiveart (System Architect & UI Engineer)
+ * @project      Inactiveart Official Portfolio (V1.0)
+ * @copyright    2025 Inactiveart. All rights reserved.
+ * @description  Main portfolio interface and digital architecture showcase.
  */
 
-// CONSOLE SIGNATURE
 console.log(
     "%c INACTIVEART %c SYSTEM READY ",
     "background:#000; color:#fff; padding:5px; font-family:'Fira Code'; font-weight:bold; border-radius:3px 0 0 3px;",
@@ -15,7 +13,6 @@ console.log(
 console.log("Architected & Developed by Inactiveart.");
 console.log("---------------------------------------");
 
-// 1. Initialize Lenis
 const lenis = new Lenis({
     duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -27,27 +24,18 @@ const lenis = new Lenis({
     touchMultiplier: 2,
 });
 
-// 2. Connect Lenis and GSAP (SYNC)
-// Update ScrollTrigger on Lenis scroll
 lenis.on('scroll', ScrollTrigger.update);
 
-// Add Lenis raf to GSAP ticker for perfect sync
 gsap.ticker.add((time) => {
     lenis.raf(time * 1000);
 });
 
-// Disable lag smoothing to prevent jumpiness on heavy loads
 gsap.ticker.lagSmoothing(0);
 
-// Initialize GSAP
 gsap.registerPlugin(ScrollTrigger);
 
-// 3. Animations
 document.addEventListener("DOMContentLoaded", () => {
 
-
-
-    // --- 0. CUSTOM CURSOR (PRIORITY) ---
     const cursorDot = document.querySelector('.cursor-dot');
     const cursorOutline = document.querySelector('.cursor-outline');
 
@@ -56,18 +44,15 @@ document.addEventListener("DOMContentLoaded", () => {
             const posX = e.clientX;
             const posY = e.clientY;
 
-            // Dot moves instantly
             cursorDot.style.left = `${posX}px`;
             cursorDot.style.top = `${posY}px`;
 
-            // Outline moves with delay/smoothness using simple animation
             cursorOutline.animate({
                 left: `${posX}px`,
                 top: `${posY}px`
             }, { duration: 500, fill: "forwards" });
         });
 
-        // Hover Interactions
         const hoverTargets = document.querySelectorAll('a, button, .work-item, .cat-titles, .hero-title');
 
         const addHover = () => document.body.classList.add('hovering');
@@ -78,7 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
             el.addEventListener('mouseleave', removeHover);
         });
 
-        // Click Interaction (Shrink)
         window.addEventListener('mousedown', () => {
             cursorOutline.style.transform = 'translate(-50%, -50%) scale(0.7)';
         });
@@ -87,11 +71,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- LOAD SOCIAL ICONS AND PORTFOLIO DATA ---
     fetch('data.json')
         .then(response => response.json())
         .then(data => {
-            // 1. Load Social Icons
             const socialContainer = document.getElementById('dynamic-socials');
             if (socialContainer && data.social) {
                 let html = '';
@@ -115,17 +97,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 socialContainer.innerHTML = html;
             }
 
-            // 2. Load Portfolio Data Dynamically
             const worksSection = document.getElementById('works');
             if (worksSection && data.portfolio) {
                 const container = worksSection.querySelector('.container');
                 if (container) {
-                    // Keep the section header, rebuild the rest
                     const sectionHeader = container.querySelector('.section-header');
-                    container.innerHTML = ''; // Clear all
-                    if (sectionHeader) container.appendChild(sectionHeader); // Re-add header
+                    container.innerHTML = '';
+                    if (sectionHeader) container.appendChild(sectionHeader);
 
-                    // Build categories dynamically
                     Object.keys(data.portfolio).forEach(catKey => {
                         const category = data.portfolio[catKey];
 
@@ -157,7 +136,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         container.appendChild(categoryDiv);
                     });
 
-                    // Re-trigger GSAP animations for new elements
                     const newRevealElements = container.querySelectorAll('.reveal-stagger');
                     newRevealElements.forEach(el => {
                         gsap.fromTo(el,
@@ -196,15 +174,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
 
-            // 3. Load Philosophy Text
             const philosophyText = document.querySelector('#about .reveal-text p');
             if (philosophyText && data.philosophy && data.philosophy.content) {
                 philosophyText.textContent = data.philosophy.content;
             }
         })
         .catch(err => console.error("Data load error:", err));
-
-    // --- PRELOADER ve SES LOGİĞİ (GÜÇLENDİRİLMİŞ) ---
 
     const logMessage = document.getElementById('log-message');
     const preloader = document.getElementById('preloader');
@@ -219,7 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "ACCESS GRANTED."
     ];
 
-    const typingDelay = 20; // Hızlandırıldı (Eski: 50)
+    const typingDelay = 20;
 
     function typeMessage(text, callback) {
         if (!logMessage) { if (callback) callback(); return; }
@@ -233,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 i++;
                 setTimeout(typing, typingDelay);
             } else if (callback) {
-                setTimeout(callback, 200); // Bekleme süresi kısaltıldı (Eski: 500)
+                setTimeout(callback, 200);
             }
         }
         typing();
@@ -245,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 startLogSequence(index + 1);
             });
         } else {
-            setTimeout(destroyPreloader, 500); // Kapanış gecikmesi kısaltıldı
+            setTimeout(destroyPreloader, 500);
         }
     }
 
@@ -255,18 +230,12 @@ document.addEventListener("DOMContentLoaded", () => {
             preloader.classList.add('fade-out');
             setTimeout(() => {
                 preloader.style.display = 'none';
-                initHeroAnimation(); // Preloader tamamen gidince başlat (Senkronizasyon)
-            }, 500); // 1s yerine 500ms: Fade-out yarısına gelince başlasın ki perde kalkarken aksın
+                initHeroAnimation();
+            }, 500);
         }
-        // Ziyaret edildi olarak işaretle
         sessionStorage.setItem('siteLoaded', 'true');
     }
 
-    // ---------------------------------------------
-    // SES BAŞLATMA VE HOVER LOGİĞİ
-    // ---------------------------------------------
-
-    // Ambiyans (Drone) Sesi Başlatma
     function initializeAmbientAudio() {
         if (ambient && ambient.paused) {
             ambient.volume = 0.15;
@@ -276,12 +245,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Hover Sesi (UI Click) - Clone yöntemi ile çoklu çalma
     function setupHoverSounds() {
-        // Toggle Logic entegrasyonu
         const toggleBtn = document.getElementById('soundToggle');
         const soundStatus = document.getElementById('soundStatus');
-        let isSoundOn = false; // Default OFF
+        let isSoundOn = false;
 
         if (toggleBtn) {
             toggleBtn.addEventListener('click', () => {
@@ -306,45 +273,32 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ---------------------------------------------
-    // SAYFA YÜKLEME VE BAŞLATMA LOGİĞİ
-    // ---------------------------------------------
-
-    // FAILSAFE: 4 saniye sonra her türlü yok et
     setTimeout(() => {
         if (document.getElementById('preloader')) {
             document.getElementById('preloader').style.display = 'none';
         }
     }, 4000);
 
-    // --- SESSION CHECK ---
-    // Eğer daha önce ziyaret edildiyse preloader'ı hemen gizle
     const isLoaded = sessionStorage.getItem('siteLoaded');
 
     if (isLoaded === 'true') {
         if (preloader) {
             preloader.style.opacity = '0';
             preloader.style.display = 'none';
-            initHeroAnimation(); // Zaten yüklüyse hemen başlat
+            initHeroAnimation();
         }
     } else {
-        // İlk ziyaret: Başlat
         if (preloader) preloader.style.display = 'flex';
         startLogSequence();
     }
 
-    // 2. Hover seslerini ata
     setupHoverSounds();
 
-    // 3. Audio Init: Tarayıcı kısıtlamasını aşmak için ilk tıkta dene
     if (ambient) {
         document.addEventListener('click', initializeAmbientAudio, { once: true });
-        // Ayrıca hemen de bir şansımızı deneyelim
         initializeAmbientAudio();
     }
 
-    // --- GSAP REVEALS (Existing Code Preserved) ---
-    // Header Reveal
     gsap.to(".site-header.reveal", {
         opacity: 1,
         y: 0,
@@ -353,7 +307,6 @@ document.addEventListener("DOMContentLoaded", () => {
         delay: 0.2
     });
 
-    // Hero Text Stagger
     const heroText = document.querySelector(".hero-text");
     if (heroText) {
         gsap.fromTo(heroText,
@@ -362,7 +315,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-    // Scroll Triggers for Sections
     const revealElements = document.querySelectorAll(".reveal-stagger");
     revealElements.forEach(el => {
         gsap.fromTo(el,
@@ -381,7 +333,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     });
 
-    // Work Items Reveal
     const workItems = document.querySelectorAll(".work-item");
     workItems.forEach(item => {
         gsap.fromTo(item,
@@ -400,7 +351,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     });
 
-    // Footer Reveal - with element existence check
     const footerReveals = document.querySelectorAll(".site-footer .reveal");
     if (footerReveals.length > 0) {
         gsap.fromTo(".site-footer .reveal",
@@ -419,25 +369,17 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-
-
-    // ----------------------------------------------------
-    // HACKER TEXT EFEKTİ (STABLE VERSION - TÜM BAŞLIKLAR)
-    // ----------------------------------------------------
-
     class HackerEffect {
         constructor(element) {
             this.element = element;
-            // data-value yoksa innerText'i yedek olarak al
             this.originalText = element.dataset.value || element.innerText;
-            // Sadece havalı karakterler
             this.chars = "XY01";
             this.interval = null;
             this.isAnimating = false;
         }
 
         run() {
-            if (this.isAnimating) return; // Zaten çalışıyorsa tekrar başlatma
+            if (this.isAnimating) return;
             this.isAnimating = true;
 
             let iterations = 0;
@@ -461,44 +403,32 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (iterations >= targetText.length) {
                     clearInterval(this.interval);
                     this.isAnimating = false;
-                    // Bittiğinde orijinal metni kesinleştir
                     element.innerText = targetText;
                 }
 
-                // Hız Ayarı: Sayıyı küçültürsen hızlanır
                 iterations += 1 / 2;
             }, 30);
         }
     }
-
-    // ----------------------------------------------------
-    // BAŞLATMA FONKSİYONU (IntersectionObserver ile)
-    // ----------------------------------------------------
 
     function initHeroAnimation() {
         const titles = document.querySelectorAll('.hacker-text');
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                // Eleman ekrana girdiğinde VE daha önce çalışmadıysa
                 if (entry.isIntersecting) {
                     const el = entry.target;
                     const effect = new HackerEffect(el);
                     effect.run();
 
-                    // Sadece bir kere çalışsın, izlemeyi bırak
                     observer.unobserve(el);
                 }
             });
-        }, { threshold: 0.1 }); // %10 görünür olduğunda başlat
+        }, { threshold: 0.1 });
 
         titles.forEach(el => observer.observe(el));
     }
 
-    // Preloader kontrolü yukarıda yapıldığı için load listener'a gerek kalmadı.
-    // initHeroAnimation() artık destroyPreloader veya session check tarafından tetikleniyor.
-
-    // --- 6. Terminal Contact Form Logic (Preserved) ---
     const FORMSPREE_ID = "mqargajo";
     const ENDPOINT = "https://formspree.io/f/" + FORMSPREE_ID;
 
@@ -508,7 +438,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (form) {
         form.addEventListener("submit", function (e) {
             e.preventDefault();
-            // 1. Durum: GÖNDERİLİYOR
             btn.innerHTML = "[ TRANSMITTING... ]";
             btn.style.opacity = "0.7";
             btn.disabled = true;
@@ -522,10 +451,8 @@ document.addEventListener("DOMContentLoaded", () => {
             })
                 .then(response => {
                     if (response.ok) {
-                        // 2. Durum: BAŞARILI
                         form.reset();
                         btn.innerHTML = "[ EXECUTE_PROTOCOL ]";
-                        // Başarı Mesajı Ekle
                         const successMsg = document.createElement("div");
                         successMsg.className = "cmd-line";
                         successMsg.style.color = "#10b981";
@@ -538,7 +465,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 })
                 .catch(error => {
-                    // 3. Durum: HATA
                     btn.innerHTML = "[ RETRY ]";
                     const errorMsg = document.createElement("div");
                     errorMsg.className = "cmd-line";

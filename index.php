@@ -1,11 +1,17 @@
 <?php
-// Security Headers and HTTPS enforcement
+/**
+ * @architect    Inactiveart (System Architect & UI Engineer)
+ * @project      Inactiveart Official Portfolio (V1.0)
+ * @copyright    2025 Inactiveart. All rights reserved.
+ * @description  Main portfolio interface and digital architecture showcase.
+ */
+
 header("Content-Security-Policy: default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; connect-src 'self';");
 header('X-Frame-Options: DENY');
 header('X-Content-Type-Options: nosniff');
 header('X-XSS-Protection: 1; mode=block');
 header('Referrer-Policy: strict-origin-when-cross-origin');
-// Enforce HTTPS except on localhost (development)
+
 if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
     if ($_SERVER['SERVER_NAME'] !== 'localhost') {
         $httpsUrl = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -13,7 +19,7 @@ if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
         exit();
     }
 }
-// Read Data
+
 $json = file_get_contents('data.json');
 $data = json_decode($json, true);
 if (!$data) {
@@ -86,7 +92,6 @@ if (!$data) {
         href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;500;700&family=Fira+Code:wght@400;700&display=swap"
         rel="stylesheet">
 
-    <!-- External Animation Libs (Preserved) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
@@ -146,7 +151,6 @@ if (!$data) {
     <header class="site-header reveal" role="banner" aria-label="Site header">
         <div class="site-logo"><span class="inactive-prefix">INACTIVE</span><span class="art-suffix">ART</span></div>
         <div class="header-actions">
-            <!-- Icons injected by script.js -->
             <div class="social-icons" id="dynamic-socials"></div>
             <nav role="navigation" aria-label="Main navigation">
                 <a href="index.php">HOME</a>
@@ -194,7 +198,6 @@ if (!$data) {
                 </div>
 
                 <?php
-                // data.json contains 'portfolio' key with categories
                 if (isset($data['portfolio'])):
                     foreach ($data['portfolio'] as $catKey => $category):
                         ?>
@@ -221,10 +224,8 @@ if (!$data) {
                                                 ?>
                                                 <picture>
                                                     <source srcset="<?php echo $webpPath; ?>" type="image/webp">
-                                                    <img src="<?php echo $imgPath; ?>" 
-                                                         alt="<?php echo $item['title']; ?>" 
-                                                         loading="lazy"
-                                                         decoding="async">
+                                                    <img src="<?php echo $imgPath; ?>" alt="<?php echo $item['title']; ?>"
+                                                        loading="lazy" decoding="async">
                                                 </picture>
                                             </figure>
                                             <h4 class="work-title"><?php echo $item['title']; ?></h4>
@@ -265,7 +266,6 @@ if (!$data) {
     <div class="cursor-outline"></div>
 
     <script src="script.js"></script>
-    <!-- FAILSAFE PRELOADER REMOVER (Independent of script.js) -->
     <script>
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -277,10 +277,9 @@ if (!$data) {
                         preloader.style.display = 'none';
                     }, 1000);
                 }
-            }, 3500); // 3.5s hard limit
+            }, 3500);
         });
 
-        // Backup timeout inside script tag itself (executes immediately)
         setTimeout(() => {
             const preloader = document.getElementById('preloader');
             if (preloader) { preloader.style.display = 'none'; }
